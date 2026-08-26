@@ -3,7 +3,7 @@
  * Queries: licensing@hstles.com
  */
 
-package host
+package atlas
 
 import (
 	"testing"

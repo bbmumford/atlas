@@ -1,4 +1,4 @@
-module github.com/bbmumford/host
+module github.com/bbmumford/atlas
 
 go 1.25.0
 
