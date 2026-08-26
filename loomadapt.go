@@ -21,7 +21,7 @@ import (
 // ⚠ Config.Platform nil is NOT auto-detect in loom (it falls back to a
 // generic dev platform with no Fly UDP-bind/6PN/region semantics) — Fly
 // deployments MUST pass this adapter or they silently lose the machinery
-// that makes the mesh work on Fly (plan §0.3 #4).
+// that makes the mesh work on Fly.
 func LoomPlatform(p PlatformInfo) ports.PlatformInfo {
 	if p == nil {
 		p = Detect()

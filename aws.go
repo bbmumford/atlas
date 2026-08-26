@@ -29,10 +29,10 @@ type AWSPlatform struct {
 	machineID string
 	appName   string
 
-	imdsOnce         sync.Once
-	imdsPublic       string
-	imdsPrivateOnce  sync.Once
-	imdsPrivate      string
+	imdsOnce        sync.Once
+	imdsPublic      string
+	imdsPrivateOnce sync.Once
+	imdsPrivate     string
 }
 
 // NewAWSPlatform creates an AWSPlatform by reading AWS env vars at construction time.

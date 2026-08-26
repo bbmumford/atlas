@@ -21,16 +21,16 @@ const MaxMachinesPerApp = 16
 type AddressSource string
 
 const (
-	SourceStatic       AddressSource = "static"
-	SourcePlatformEnv  AddressSource = "env"
-	SourceDNS          AddressSource = "dns"
-	SourceIMDS         AddressSource = "imds"
-	SourceK8sDownward  AddressSource = "k8s"
-	SourceInterface    AddressSource = "iface"
-	SourceSTUN         AddressSource = "stun"
-	SourceTURN         AddressSource = "turn"
-	SourceReflection   AddressSource = "reflection"
-	SourceUPnP         AddressSource = "upnp"
+	SourceStatic      AddressSource = "static"
+	SourcePlatformEnv AddressSource = "env"
+	SourceDNS         AddressSource = "dns"
+	SourceIMDS        AddressSource = "imds"
+	SourceK8sDownward AddressSource = "k8s"
+	SourceInterface   AddressSource = "iface"
+	SourceSTUN        AddressSource = "stun"
+	SourceTURN        AddressSource = "turn"
+	SourceReflection  AddressSource = "reflection"
+	SourceUPnP        AddressSource = "upnp"
 )
 
 // PlatformInfo provides platform-specific metadata to library packages.
