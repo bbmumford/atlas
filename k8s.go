@@ -28,6 +28,9 @@ type K8sPlatform struct {
 	podIP     string
 	hostIP    string
 	podName   string
+	// fallbackRegion is DetectWith's WithFallbackRegion value, the region Region
+	// reports when the pod carries no region hint.
+	fallbackRegion string
 }
 
 // NewK8sPlatform reads the standard downward-API env vars (conventional
@@ -46,17 +49,26 @@ func NewK8sPlatform() *K8sPlatform {
 }
 
 func (k *K8sPlatform) Region() string {
+	if r := k.knownRegion(); r != "" {
+		return r
+	}
+	return "unknown"
+}
+
+// knownRegion is K8S_REGION, else an inherited AWS / GCP region env, else the
+// fallback region DetectWith was given, else "": Region without its placeholder,
+// which KnownRegion reads.
+func (k *K8sPlatform) knownRegion() string {
 	if k.region != "" {
 		return k.region
 	}
-	// Fall back to any inherited AWS / GCP region env.
 	if r := os.Getenv("AWS_REGION"); r != "" {
 		return Normalize(r)
 	}
 	if r := os.Getenv("GOOGLE_CLOUD_REGION"); r != "" {
 		return Normalize(r)
 	}
-	return "unknown"
+	return k.fallbackRegion
 }
 
 func (k *K8sPlatform) MachineID() string { return k.podName }

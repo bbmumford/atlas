@@ -18,13 +18,16 @@ var _ aether.BindAddressResolver = (*DevPlatform)(nil)
 // DevPlatform provides sensible defaults for local development and bare metal.
 type DevPlatform struct {
 	region string // Can be set via config; defaults to "local"
+	// defaulted records that region is the "local" placeholder, which KnownRegion
+	// reports as no region.
+	defaulted bool
 }
 
 // NewDevPlatform creates a DevPlatform with an optional region override.
 // If region is empty, defaults to "local".
 func NewDevPlatform(region string) *DevPlatform {
 	if region == "" {
-		region = "local"
+		return &DevPlatform{region: "local", defaulted: true}
 	}
 	return &DevPlatform{region: region}
 }
