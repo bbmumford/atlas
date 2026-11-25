@@ -16,15 +16,15 @@ region := p.Region()                // Fly-style region code; atlas.Normalize ma
 bind := p.ResolveUDPBind(4242)      // on Fly: "fly-global-services:4242"
 conn, err := p.OpenUDPListener("udp", bind)
 
-node := atlas.LoomPlatform(p)       // the same platform as loom's ports.PlatformInfo
+cfg := node.Config{Platform: p}     // p is loom's ports.PlatformInfo itself
 ```
 
-`PlatformInfo` is the interface every platform implements (`Region`, `MachineID`, `AppName`, `PublicIP`, `PrivateIP`, `ResolveUDPBind`, `ResolveUDPBindDualStack`, `OpenUDPListener`, `IsCloud`, `Provider`, `EnvTags`, `PreferredSources`). `KnownRegion` returns a platform's region only when the platform knows one.
+`PlatformInfo` is loom's `ports.PlatformInfo`, the interface every platform implements (`Region`, `MachineID`, `AppName`, `PublicIP`, `PrivateIP`, `ResolveUDPBind`, `ResolveUDPBindDualStack`, `OpenUDPListener`, `IsCloud`, `Provider`, `EnvTags`, `PreferredSources`). `AddressSource` is loom's `ports.AddressSource`, and a platform's `PreferredSources` uses loom's spellings (`platform-env`, `interface`, `k8s-downward`). `KnownRegion` returns a platform's region only when the platform knows one.
 
 ## Dependencies
 
-- `github.com/bbmumford/loom/ports`: `LoomPlatform` adapts an atlas platform
-  to loom's `ports.PlatformInfo`.
+- `github.com/bbmumford/loom/ports`: `PlatformInfo` and `AddressSource` are
+  loom's types.
 - `github.com/ORBTR/aether`: the bind resolvers implement aether's
   `BindAddressResolver`.
 - `go.mod` replaces aether and loom with the sibling checkouts `../aether` and
