@@ -21,7 +21,9 @@ func clearDetectionEnv(t *testing.T) {
 	t.Helper()
 	for _, name := range detectionEnv {
 		t.Setenv(name, "")
-		os.Unsetenv(name)
+		if err := os.Unsetenv(name); err != nil {
+			t.Fatalf("os.Unsetenv: %v", err)
+		}
 	}
 }
 

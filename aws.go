@@ -140,7 +140,9 @@ func fetchAWSPublicIPv4(ctx context.Context) string {
 		}
 		return ""
 	}
-	defer resp2.Body.Close()
+	// The body is read to its end below; a failed close cannot change what was
+	// read, so its error is dropped.
+	defer func() { _ = resp2.Body.Close() }()
 	ipBytes, err := io.ReadAll(resp2.Body)
 	if err != nil {
 		return ""
@@ -187,7 +189,9 @@ func fetchAWSPrivateIPv4(ctx context.Context) string {
 		}
 		return ""
 	}
-	defer resp2.Body.Close()
+	// The body is read to its end below; a failed close cannot change what was
+	// read, so its error is dropped.
+	defer func() { _ = resp2.Body.Close() }()
 	ipBytes, err := io.ReadAll(resp2.Body)
 	if err != nil {
 		return ""

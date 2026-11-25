@@ -118,7 +118,9 @@ func fetchGCPInternalIP(ctx context.Context) string {
 		}
 		return ""
 	}
-	defer resp.Body.Close()
+	// The body is read to its end below; a failed close cannot change what was
+	// read, so its error is dropped.
+	defer func() { _ = resp.Body.Close() }()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return ""
@@ -143,7 +145,9 @@ func fetchGCPExternalIP(ctx context.Context) string {
 		}
 		return ""
 	}
-	defer resp.Body.Close()
+	// The body is read to its end below; a failed close cannot change what was
+	// read, so its error is dropped.
+	defer func() { _ = resp.Body.Close() }()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return ""

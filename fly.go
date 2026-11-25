@@ -5,6 +5,7 @@
 package atlas
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"os"
@@ -70,8 +71,7 @@ func (f *FlyPlatform) OpenUDPListener(network, address string) (*net.UDPConn, er
 	}
 	conn, ok := pc.(*net.UDPConn)
 	if !ok {
-		pc.Close()
-		return nil, fmt.Errorf("fly: ListenPacket returned %T, not *net.UDPConn", pc)
+		return nil, errors.Join(fmt.Errorf("fly: ListenPacket returned %T, not *net.UDPConn", pc), pc.Close())
 	}
 	return conn, nil
 }
